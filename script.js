@@ -40,7 +40,12 @@ function loadRandomCocktail() {
     })
     .catch(() => {
       hideLoader();
-      apiSection.innerHTML = "<p>Error al cargar el coctel.</p>";
+      apiSection.innerHTML =  `
+      <section id="errorContainer">
+        <h2>Error al cargar el coctel.</h2>
+        <img src="img/error.png">
+      </section>
+      `;
     });
 }
 
@@ -127,7 +132,12 @@ function renderFavorites() {
   const favorites = getFavorites();
 
   if (favorites.length === 0) {
-    favoritesSection.innerHTML = "<p>No hay favoritos guardados</p>";
+    favoritesSection.innerHTML =  `
+      <section id="emptyContainer">
+        <p>No hay favoritos guardados</p>
+        <img src="img/empty.png">
+      </section>
+      `;
     return;
   }
 
