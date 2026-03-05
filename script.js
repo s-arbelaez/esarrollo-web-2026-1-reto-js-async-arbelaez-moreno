@@ -1,17 +1,17 @@
 const apiSection = document.getElementById("api");
 const favoritesSection = document.getElementById("guardados");
 const loader = document.getElementById("loader");
-const randomBtn = document.getElementById("randomBtn");
 
 let currentDrink = null;
 
-/* =====================
-   UTILIDADES
-===================== */
-
 function showLoader() {
   loader.style.display = "block";
-  apiSection.innerHTML = "";
+  apiSection.innerHTML = `
+    <article class="cocktail">
+      <h2>Cargando</h2>
+      <img src="img/loading.gif">
+    </article>
+  `;
 }
 
 function hideLoader() {
@@ -19,17 +19,16 @@ function hideLoader() {
 }
 
 function getFavorites() {
-  return JSON.parse(localStorage.getItem("favorites")) || [];
+  return JSON.parse(localStorage.getItem("favorites")) ?? [];
 }
 
 function saveFavorites(favs) {
   localStorage.setItem("favorites", JSON.stringify(favs));
 }
 
-/* =====================
-   API CALLS
-===================== */
+// ! API calls
 
+// ? Renderizar un coctel random
 function loadRandomCocktail() {
   showLoader();
 
@@ -41,10 +40,11 @@ function loadRandomCocktail() {
     })
     .catch(() => {
       hideLoader();
-      apiSection.innerHTML = "<p>Error al cargar el cóctel.</p>";
+      apiSection.innerHTML = "<p>Error al cargar el coctel.</p>";
     });
 }
 
+// ? Renderizar un coctel guardado
 function loadCocktailById(id) {
   showLoader();
 
@@ -60,10 +60,7 @@ function loadCocktailById(id) {
     });
 }
 
-/* =====================
-   RENDER PRINCIPAL
-===================== */
-
+// ! Crear la plantilla de la bebida
 function renderDrink(drink) {
   currentDrink = drink;
 
@@ -81,26 +78,26 @@ function renderDrink(drink) {
   apiSection.innerHTML = `
     <article class="cocktail">
       <h2>${drink.strDrink}</h2>
-      <img src="${drink.strDrinkThumb}" alt="${drink.strDrink}">
+      <img src="${drink.strDrinkThumb}">
       <p><strong>ID:</strong> ${drink.idDrink}</p>
       <p><strong>Categoría:</strong> ${drink.strCategory}</p>
       <p><strong>Preparación:</strong> ${drink.strInstructions}</p>
 
       <h3>Ingredientes</h3>
       <ul>${ingredients}</ul>
-
-      <button id="favBtn">
-        ${isFavorite(drink.idDrink) ? "❌ Eliminar de favoritos" : "⭐ Guardar en favoritos"}
-      </button>
+      <section>
+        <button id="favBtn">
+          ${isFavorite(drink.idDrink) ? "Eliminar de favoritos" : "Guardar en favoritos"}
+        </button>
+        <button id="randomBtn">Refrescar</button>
+      </section>
     </article>
   `;
-
+  document.getElementById("randomBtn").onclick = loadRandomCocktail;
   document.getElementById("favBtn").onclick = toggleFavorite;
 }
 
-/* =====================
-   FAVORITOS
-===================== */
+
 
 function isFavorite(id) {
   return getFavorites().some(f => f.id === id);
@@ -113,7 +110,6 @@ function toggleFavorite() {
   const index = favorites.findIndex(f => f.id === currentDrink.idDrink);
 
   if (index === -1) {
-    // guardar SOLO id y nombre
     favorites.push({
       id: currentDrink.idDrink,
       nombre: currentDrink.strDrink
@@ -124,14 +120,14 @@ function toggleFavorite() {
 
   saveFavorites(favorites);
   renderFavorites();
-  renderDrink(currentDrink); // refresca botón
+  renderDrink(currentDrink);
 }
 
 function renderFavorites() {
   const favorites = getFavorites();
 
   if (favorites.length === 0) {
-    favoritesSection.innerHTML = "<p>No hay favoritos guardados ⭐</p>";
+    favoritesSection.innerHTML = "<p>No hay favoritos guardados</p>";
     return;
   }
 
@@ -152,15 +148,6 @@ function renderFavorites() {
   `;
 }
 
-/* =====================
-   EVENTOS / INIT
-===================== */
-
-// criterio 1: carga automática
 loadRandomCocktail();
 
-// criterio 2: opción dedicada
-randomBtn.addEventListener("click", loadRandomCocktail);
-
-// render favoritos al inicio
 renderFavorites();

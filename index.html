@@ -1,36 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Cócteles Aleatorios</title>
-
-  <!-- CSS externo -->
-  <link rel="stylesheet" href="styles.css">
-
-  <!-- JS con defer para evitar errores de null -->
-  <script src="script.js" defer></script>
+    <meta charset="UTF-8">
+    <title>Aplicación de API en JS</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
+
 <body>
 
-  <header>
-    <h1>🍸 Cóctel Aleatorio</h1>
-    <button id="randomBtn">Cargar otro cóctel</button>
-  </header>
+    <header>
+        <h1>Explorador de cocteles</h1>
+    </header>
+    <div id="loader" aria-label="Cargando" role="status"></div>
 
-  <!-- LOADER VISUAL (spinner / animación CSS) -->
-  <div id="loader" aria-label="Cargando" role="status"></div>
-
-  <main>
-    <!-- VISTA PRINCIPAL DEL API -->
-    <section id="api">
-      <!-- Aquí se renderiza el cóctel -->
-    </section>
-
-    <!-- FAVORITOS -->
-    <section id="guardados">
-      <!-- Aquí se renderizan los favoritos -->
-    </section>
-  </main>
+    <main>
+        <article>
+            
+            <section id="api">
+                <!-- ! Renderizado del producto de la API  -->
+            </section>
+        </article>
+        <article>
+            <h2>Favoritos</h2>
+            <section id="guardados">
+                <!-- ! Renderizado de los objetos guardados -->
+            </section>
+        </article>
+    </main>
 
 </body>
+
 </html>
