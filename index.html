@@ -1,11 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Cócteles Aleatorios</title>
+
+  <!-- CSS externo -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- JS con defer para evitar errores de null -->
+  <script src="script.js" defer></script>
 </head>
 <body>
-    
+
+  <header>
+    <h1>🍸 Cóctel Aleatorio</h1>
+    <button id="randomBtn">Cargar otro cóctel</button>
+  </header>
+
+  <!-- LOADER VISUAL (spinner / animación CSS) -->
+  <div id="loader" aria-label="Cargando" role="status"></div>
+
+  <main>
+    <!-- VISTA PRINCIPAL DEL API -->
+    <section id="api">
+      <!-- Aquí se renderiza el cóctel -->
+    </section>
+
+    <!-- FAVORITOS -->
+    <section id="guardados">
+      <!-- Aquí se renderizan los favoritos -->
+    </section>
+  </main>
+
 </body>
 </html>
